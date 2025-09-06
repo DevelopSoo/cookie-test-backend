@@ -33,7 +33,8 @@ app.post("/api/cookie", (req, res) => {
   res.cookie("accessToken", "token-value", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: "none",
+    secure: true,
     path: "/",
     maxAge: 1000 * 60 * 60 * 24, // 24시간
   });
