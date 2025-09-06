@@ -25,15 +25,15 @@ app.get("/api/cookie", (req, res) => {
 
 // 방식
 // 1. 프론트엔드와 백엔드 도메인이 다를 땐 same-site 설정이 아예 먹지 않는지 확인 -> 쿠키 설정 안됨
-// 2. domain을 프론트엔드로 설정했을 때, 쿠키가 설정되는지 확인
+// 2. domain을 프론트엔드로 설정 & samesite strict 했을 때, 쿠키가 설정되는지 확인 -> 500 에러 발생
+// 3. samesite lax로 변경했을 때, 쿠키가 설정되는지 확인
 // 3. domain을 백엔드 주소로 설정했을 때, 쿠키가 설정되는지 확인
 // 백엔드에서 토큰을 쿠키로 전달하는 방법
 app.post("/api/cookie", (req, res) => {
   res.cookie("accessToken", "token-value", {
     httpOnly: true,
-    domain: process.env.CLIENT_URL,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    sameSite: "lax",
     path: "/",
     maxAge: 1000 * 60 * 60 * 24, // 24시간
   });
